@@ -1,18 +1,19 @@
 import os
 import zipfile
-
+import xml.etree.cElementTree as ET
 
 def main():
     countfiles()
-    extractZip()
+    #   extractZip()
+    #   parseXML()
 
 
 def countfiles():
-    os.chdir('/Users/Troy/PycharmProjects/DocumentFontChecker')
     docx_counter = 0
     pptx_counter = 0
     for root, dirs, files in os.walk('Test folder'):
         for file in files:
+            print(file)
             if str.lower(file).endswith('.docx'):
                 docx_counter += 1
             if str.lower(file).endswith('.pptx'):
@@ -36,6 +37,12 @@ def extractZip():
     my_zip.close()
     return
 
+def parseXML():
+    tree = ET.parse('word/document.xml')
+    root = tree.getroot()
+    for child in root:
+        print(child.tag, child.attrib)
+    return
 
 if __name__ == "__main__":
     main()
