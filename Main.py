@@ -10,7 +10,10 @@ font_list = []
 def main():
     countfiles()
     print(font_list)
-
+    outfile = open("UsedFonts.txt", "w")
+    for font in font_list:
+        outfile.write(font + '\n')
+    outfile.close()
 
 def countfiles():
     for root, dirs, files in os.walk('Test folder'):
