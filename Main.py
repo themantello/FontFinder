@@ -25,8 +25,9 @@ def extractzip(xfile):
     my_zip = zipfile.ZipFile(xfile, 'r')
     with my_zip as zip_file:
         for member in zip_file.namelist():
+            #   print(str(member))
             filename = os.path.basename(member)
-            if filename == 'document.xml':
+            if filename == 'fontTable.xml':
                 source = zip_file.read(member)
     my_zip.close()
     return source
@@ -36,8 +37,8 @@ def parsexml(sourcexml):
     tree = ET.ElementTree(ET.fromstring(sourcexml))
     root = tree.getroot()
     namespaces = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
-    for font in root.findall("w:body/w:p/w:pPr/w:rPr/w:rFonts", namespaces):
-        font_list.append((font.get("{http://schemas.openxmlformats.org/wordprocessingml/2006/main}ascii")))
+    for font in root.findall("w:font", namespaces):
+        font_list.append((font.get("{http://schemas.openxmlformats.org/wordprocessingml/2006/main}name")))
     return
 
 
